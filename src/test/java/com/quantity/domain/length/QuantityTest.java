@@ -74,4 +74,34 @@ class QuantityTest {
 
         assertEquals(new Quantity(36.0, LengthUnit.INCHES), result);
     }
+    
+    @Test
+    void testConvertToBaseUnit_InchesToFeet() {
+        double result = LengthUnit.INCHES.convertToBaseUnit(12.0);
+        assertEquals(1.0, result, 1e-6);
+    }
+
+    @Test
+    void testConvertFromBaseUnit_FeetToYards() {
+        double result = LengthUnit.YARDS.convertFromBaseUnit(3.0);
+        assertEquals(1.0, result, 1e-6);
+    }
+    @Test
+    void testQuantity_ConvertTo() {
+        Quantity q = new Quantity(1.0, LengthUnit.FEET);
+        Quantity result = q.convertTo(LengthUnit.INCHES);
+
+        assertEquals(new Quantity(12.0, LengthUnit.INCHES), result);
+    }
+    @Test
+    void testQuantity_Add_WithTargetUnit() {
+
+        Quantity result = Quantity.add(
+                new Quantity(1.0, LengthUnit.FEET),
+                new Quantity(12.0, LengthUnit.INCHES),
+                LengthUnit.YARDS);
+
+        assertEquals(0.666666, result.getValue(), 1e-6);
+        assertEquals(LengthUnit.YARDS, result.getUnit());
+    }
 }
