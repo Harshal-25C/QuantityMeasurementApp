@@ -11,10 +11,10 @@ public final class Quantity {
 
     public Quantity(double value, LengthUnit unit) {
 
-        if (!Double.isFinite(value))
+        if(!Double.isFinite(value))
             throw new IllegalArgumentException("Invalid numeric value");
 
-        if (unit == null)
+        if(unit == null)
             throw new IllegalArgumentException("Unit cannot be null");
 
         this.value = value;
@@ -29,15 +29,27 @@ public final class Quantity {
         return unit;
     }
 
+    // Conversion
+    public Quantity convertTo(LengthUnit targetUnit) {
+
+        if (targetUnit == null)
+            throw new IllegalArgumentException("Target unit cannot be null");
+
+        double baseValue = unit.convertToBaseUnit(value);
+        double converted = targetUnit.convertFromBaseUnit(baseValue);
+
+        return new Quantity(converted, targetUnit);
+    }
+
     // ==========================
     // UC6 – Default Addition
-    // Result in first operand unit
     // ==========================
     public Quantity add(Quantity other) {
+
         if (other == null)
             throw new IllegalArgumentException("Second operand cannot be null");
 
-        return addInternal(this, other, this.unit);
+        return add(this, other, this.unit);
     }
 
     // ==========================
@@ -53,32 +65,16 @@ public final class Quantity {
         if (targetUnit == null)
             throw new IllegalArgumentException("Target unit cannot be null");
 
-        return addInternal(q1, q2, targetUnit);
+        double base1 = q1.unit.convertToBaseUnit(q1.value);
+        double base2 = q2.unit.convertToBaseUnit(q2.value);
+
+        double sumBase = base1 + base2;
+
+        double result = targetUnit.convertFromBaseUnit(sumBase);
+
+        return new Quantity(result, targetUnit);
     }
 
-    // ==========================
-    // PRIVATE UTILITY METHOD
-    // (Avoids duplication)
-    // ==========================
-    private static Quantity addInternal(Quantity q1,
-                                        Quantity q2,
-                                        LengthUnit targetUnit) {
-
-        // Convert both to base unit (feet)
-        double q1Feet = q1.unit.toFeet(q1.value);
-        double q2Feet = q2.unit.toFeet(q2.value);
-
-        double sumFeet = q1Feet + q2Feet;
-
-        // Convert to target unit
-        double resultValue = targetUnit.fromFeet(sumFeet);
-
-        return new Quantity(resultValue, targetUnit);
-    }
-
-    // ==========================
-    // Equality
-    // ==========================
     @Override
     public boolean equals(Object obj) {
 
@@ -87,15 +83,15 @@ public final class Quantity {
 
         Quantity other = (Quantity) obj;
 
-        double thisFeet = this.unit.toFeet(this.value);
-        double otherFeet = other.unit.toFeet(other.value);
+        double base1 = unit.convertToBaseUnit(value);
+        double base2 = other.unit.convertToBaseUnit(other.value);
 
-        return Math.abs(thisFeet - otherFeet) < EPSILON;
+        return Math.abs(base1 - base2) < EPSILON;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(unit.toFeet(value));
+        return Objects.hash(unit.convertToBaseUnit(value));
     }
 
     @Override
