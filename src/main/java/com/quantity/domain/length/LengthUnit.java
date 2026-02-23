@@ -2,18 +2,22 @@ package com.quantity.domain.length;
 
 public enum LengthUnit {
 
-    FEET(1.0),
-    INCH(1.0 / 12.0),
-    YARD(3.0),
-    CENTIMETER(0.0328084167);
+    INCHES(1.0),
+    FEET(12.0),
+    YARDS(36.0),
+    CENTIMETERS(0.393701);
 
-    private final double conversionFactorToFeet;
+    private final double factorToInches;
 
-    LengthUnit(double conversionFactorToFeet) {
-        this.conversionFactorToFeet = conversionFactorToFeet;
+    LengthUnit(double factorToInches) {
+        this.factorToInches = factorToInches;
     }
 
-    public double toBaseUnit(double value) {
-        return value * conversionFactorToFeet;
+    public double toBase(double value) {
+        return value * factorToInches;
+    }
+
+    public double fromBase(double baseValue) {
+        return baseValue / factorToInches;
     }
 }
