@@ -10,6 +10,7 @@ public final class Quantity {
     private final LengthUnit unit;
 
     public Quantity(double value, LengthUnit unit) {
+
         if (!Double.isFinite(value))
             throw new IllegalArgumentException("Invalid numeric value");
 
@@ -28,72 +29,59 @@ public final class Quantity {
         return unit;
     }
 
-    // ========================
-    // UC5: CONVERSION
-    // ========================
-
-    public Quantity convertTo(LengthUnit targetUnit) {
-        if (targetUnit == null)
-            throw new IllegalArgumentException("Target unit cannot be null");
-
-        double valueInFeet = unit.toFeet(value);
-        double convertedValue = targetUnit.fromFeet(valueInFeet);
-
-        return new Quantity(convertedValue, targetUnit);
-    }
-
-    public static double convert(double value, LengthUnit source, LengthUnit target) {
-        if (!Double.isFinite(value))
-            throw new IllegalArgumentException("Invalid numeric value");
-
-        if (source == null || target == null)
-            throw new IllegalArgumentException("Unit cannot be null");
-
-        double valueInFeet = source.toFeet(value);
-        return target.fromFeet(valueInFeet);
-    }
-
-    // ========================
-    // UC6: ADDITION
-    // ========================
-
+    // ==========================
+    // UC6 – Default Addition
+    // Result in first operand unit
+    // ==========================
     public Quantity add(Quantity other) {
         if (other == null)
             throw new IllegalArgumentException("Second operand cannot be null");
 
-        double thisInFeet = this.unit.toFeet(this.value);
-        double otherInFeet = other.unit.toFeet(other.value);
-
-        double sumInFeet = thisInFeet + otherInFeet;
-
-        double resultInThisUnit = this.unit.fromFeet(sumInFeet);
-
-        return new Quantity(resultInThisUnit, this.unit);
+        return addInternal(this, other, this.unit);
     }
 
-    public static Quantity add(Quantity q1, Quantity q2, LengthUnit targetUnit) {
+    // ==========================
+    // UC7 – Explicit Target Unit
+    // ==========================
+    public static Quantity add(Quantity q1,
+                               Quantity q2,
+                               LengthUnit targetUnit) {
+
         if (q1 == null || q2 == null)
             throw new IllegalArgumentException("Operands cannot be null");
 
         if (targetUnit == null)
             throw new IllegalArgumentException("Target unit cannot be null");
 
+        return addInternal(q1, q2, targetUnit);
+    }
+
+    // ==========================
+    // PRIVATE UTILITY METHOD
+    // (Avoids duplication)
+    // ==========================
+    private static Quantity addInternal(Quantity q1,
+                                        Quantity q2,
+                                        LengthUnit targetUnit) {
+
+        // Convert both to base unit (feet)
         double q1Feet = q1.unit.toFeet(q1.value);
         double q2Feet = q2.unit.toFeet(q2.value);
 
         double sumFeet = q1Feet + q2Feet;
 
-        double result = targetUnit.fromFeet(sumFeet);
+        // Convert to target unit
+        double resultValue = targetUnit.fromFeet(sumFeet);
 
-        return new Quantity(result, targetUnit);
+        return new Quantity(resultValue, targetUnit);
     }
 
-    // ========================
-    // EQUALITY
-    // ========================
-
+    // ==========================
+    // Equality
+    // ==========================
     @Override
     public boolean equals(Object obj) {
+
         if (this == obj) return true;
         if (!(obj instanceof Quantity)) return false;
 
@@ -107,8 +95,7 @@ public final class Quantity {
 
     @Override
     public int hashCode() {
-        double base = unit.toFeet(value);
-        return Objects.hash(base);
+        return Objects.hash(unit.toFeet(value));
     }
 
     @Override
