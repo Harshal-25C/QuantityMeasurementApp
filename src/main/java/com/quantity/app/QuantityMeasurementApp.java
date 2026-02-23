@@ -5,26 +5,32 @@ import com.quantity.domain.length.Quantity;
 
 public class QuantityMeasurementApp {
 
-    public static boolean demonstrateLengthEquality(Quantity q1, Quantity q2) {
-        return q1.equals(q2);
+    public static void demonstrateAddition(Quantity q1, Quantity q2) {
+        Quantity result = q1.add(q2);
+        System.out.println("Result: " + result);
     }
 
-    public static void demonstrate(String label, Quantity q1, Quantity q2) {
-        System.out.println(label + " : " + demonstrateLengthEquality(q1, q2));
+    public static void demonstrateConversion(double value, LengthUnit from,  LengthUnit to) {
+        double result = Quantity.convert(value, from, to);
+        System.out.println("Converted Value: " + result + " " + to);
     }
 
     public static void main(String[] args) {
 
-        demonstrate("Feet == Feet",
+        //UC6 Examples
+        demonstrateAddition(
                 new Quantity(1.0, LengthUnit.FEET),
-                new Quantity(1.0, LengthUnit.FEET));
+                new Quantity(12.0, LengthUnit.INCHES)
+        );
 
-        demonstrate("Inches == Inches",
-                new Quantity(1.0, LengthUnit.INCH),
-                new Quantity(1.0, LengthUnit.INCH));
+        demonstrateAddition(
+                new Quantity(1.0, LengthUnit.YARDS),
+                new Quantity(3.0, LengthUnit.FEET)
+        );
 
-        demonstrate("Feet == Inches",
-                new Quantity(1.0, LengthUnit.FEET),
-                new Quantity(12.0, LengthUnit.INCH));
+        demonstrateAddition(
+                new Quantity(2.54, LengthUnit.CENTIMETERS),
+                new Quantity(1.0, LengthUnit.INCHES)
+        );
     }
 }
