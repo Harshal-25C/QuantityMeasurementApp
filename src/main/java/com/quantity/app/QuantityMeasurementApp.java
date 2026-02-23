@@ -1,39 +1,31 @@
 package com.quantity.app;
 
-import com.quantity.domain.length.LengthUnit;
-import com.quantity.domain.length.Quantity;
+import com.quantity.domain.weight.*;
 
 public class QuantityMeasurementApp {
 
     public static void main(String[] args) {
 
         System.out.println(
-                new Quantity(1.0, LengthUnit.FEET)
-                        .convertTo(LengthUnit.INCHES)
+                new QuantityWeight(1.0, WeightUnit.KILOGRAM)
+                        .equals(new QuantityWeight(1000.0, WeightUnit.GRAM))
         );
 
         System.out.println(
-                Quantity.add(
-                        new Quantity(1.0, LengthUnit.FEET),
-                        new Quantity(12.0, LengthUnit.INCHES),
-                        LengthUnit.FEET)
+                new QuantityWeight(2.0, WeightUnit.POUND)
+                        .convertTo(WeightUnit.KILOGRAM)
         );
 
         System.out.println(
-                new Quantity(36.0, LengthUnit.INCHES)
-                        .equals(new Quantity(1.0, LengthUnit.YARDS))
+                new QuantityWeight(1.0, WeightUnit.KILOGRAM)
+                        .add(new QuantityWeight(1000.0, WeightUnit.GRAM))
         );
 
         System.out.println(
-                Quantity.add(
-                        new Quantity(1.0, LengthUnit.YARDS),
-                        new Quantity(3.0, LengthUnit.FEET),
-                        LengthUnit.YARDS)
-        );
-
-        System.out.println(
-                new Quantity(2.54, LengthUnit.CENTIMETERS)
-                        .convertTo(LengthUnit.INCHES)
+                QuantityWeight.add(
+                        new QuantityWeight(1.0, WeightUnit.KILOGRAM),
+                        new QuantityWeight(1000.0, WeightUnit.GRAM),
+                        WeightUnit.GRAM)
         );
     }
 }
