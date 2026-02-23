@@ -8,71 +8,70 @@ class QuantityTest {
     private static final double EPSILON = 1e-6;
 
     @Test
-    void testAddition_SameUnit() {
-        Quantity q1 = new Quantity(1.0, LengthUnit.FEET);
-        Quantity q2 = new Quantity(2.0, LengthUnit.FEET);
-
-        Quantity result = q1.add(q2);
-
-        assertEquals(new Quantity(3.0, LengthUnit.FEET), result);
-    }
-
-    @Test
-    void testAddition_CrossUnit_FeetPlusInches() {
-        Quantity q1 = new Quantity(1.0, LengthUnit.FEET);
-        Quantity q2 = new Quantity(12.0, LengthUnit.INCHES);
-
-        Quantity result = q1.add(q2);
+    void testAddition_ExplicitTargetUnit_Feet() {
+        Quantity result = Quantity.add(
+                new Quantity(1.0, LengthUnit.FEET),
+                new Quantity(12.0, LengthUnit.INCHES),
+                LengthUnit.FEET);
 
         assertEquals(new Quantity(2.0, LengthUnit.FEET), result);
     }
 
     @Test
-    void testAddition_Commutative() {
-        Quantity q1 = new Quantity(1.0, LengthUnit.FEET);
-        Quantity q2 = new Quantity(12.0, LengthUnit.INCHES);
+    void testAddition_ExplicitTargetUnit_Inches() {
+        Quantity result = Quantity.add(
+                new Quantity(1.0, LengthUnit.FEET),
+                new Quantity(12.0, LengthUnit.INCHES),
+                LengthUnit.INCHES);
 
-        assertEquals(q1.add(q2), q2.add(q1));
+        assertEquals(new Quantity(24.0, LengthUnit.INCHES), result);
     }
 
     @Test
-    void testAddition_WithZero() {
-        Quantity q1 = new Quantity(5.0, LengthUnit.FEET);
-        Quantity zero = new Quantity(0.0, LengthUnit.INCHES);
+    void testAddition_ExplicitTargetUnit_Yards() {
+        Quantity result = Quantity.add(
+                new Quantity(1.0, LengthUnit.FEET),
+                new Quantity(12.0, LengthUnit.INCHES),
+                LengthUnit.YARDS);
 
-        assertEquals(q1, q1.add(zero));
+        assertEquals(0.666666, result.getValue(), EPSILON);
+        assertEquals(LengthUnit.YARDS, result.getUnit());
     }
 
     @Test
-    void testAddition_Negative() {
-        Quantity q1 = new Quantity(5.0, LengthUnit.FEET);
-        Quantity q2 = new Quantity(-2.0, LengthUnit.FEET);
+    void testAddition_ExplicitTargetUnit_Commutativity() {
 
-        assertEquals(new Quantity(3.0, LengthUnit.FEET), q1.add(q2));
+        Quantity r1 = Quantity.add(
+                new Quantity(1.0, LengthUnit.FEET),
+                new Quantity(12.0, LengthUnit.INCHES),
+                LengthUnit.YARDS);
+
+        Quantity r2 = Quantity.add(
+                new Quantity(12.0, LengthUnit.INCHES),
+                new Quantity(1.0, LengthUnit.FEET),
+                LengthUnit.YARDS);
+
+        assertEquals(r1, r2);
     }
 
     @Test
-    void testAddition_NullOperand() {
-        Quantity q1 = new Quantity(1.0, LengthUnit.FEET);
+    void testAddition_ExplicitTargetUnit_NullTarget() {
 
-        assertThrows(IllegalArgumentException.class, () -> q1.add(null));
+        assertThrows(IllegalArgumentException.class,
+                () -> Quantity.add(
+                        new Quantity(1.0, LengthUnit.FEET),
+                        new Quantity(12.0, LengthUnit.INCHES),
+                        null));
     }
 
     @Test
-    void testAddition_LargeValues() {
-        Quantity q1 = new Quantity(1e6, LengthUnit.FEET);
-        Quantity q2 = new Quantity(1e6, LengthUnit.FEET);
+    void testAddition_ExplicitTargetUnit_NegativeValues() {
 
-        assertEquals(new Quantity(2e6, LengthUnit.FEET), q1.add(q2));
-    }
+        Quantity result = Quantity.add(
+                new Quantity(5.0, LengthUnit.FEET),
+                new Quantity(-2.0, LengthUnit.FEET),
+                LengthUnit.INCHES);
 
-    @Test
-    void testAddition_SmallValues() {
-        Quantity q1 = new Quantity(0.001, LengthUnit.FEET);
-        Quantity q2 = new Quantity(0.002, LengthUnit.FEET);
-
-        Quantity result = q1.add(q2);
-
-        assertEquals(0.003, result.getValue(), EPSILON);
+        assertEquals(new Quantity(36.0, LengthUnit.INCHES), result);
     }
 }
