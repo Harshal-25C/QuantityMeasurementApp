@@ -1,6 +1,6 @@
 package com.quantity.unit;
 
-import com.quantity.domain.IMeasurable;
+import com.quantity.unit.IMeasurable;
 
 public enum WeightUnit implements IMeasurable {
 
@@ -37,4 +37,16 @@ public enum WeightUnit implements IMeasurable {
     public String getUnitName() {
         return name();
     }
+
+	@Override
+	public double toBaseUnit(double value) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double fromBaseUnit(double baseValue) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
