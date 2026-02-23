@@ -2,22 +2,36 @@ package com.quantity.domain.length;
 
 public enum LengthUnit {
 
-    FEET(1.0),                   // Base Unit
-    INCHES(1.0 / 12.0),          // 1 inch = 1/12 feet
-    YARDS(3.0),                  // 1 yard = 3 feet
-    CENTIMETERS(0.0328084);      // 1 cm = 0.0328084 feet
+    FEET(1.0),                 // Base Unit
+    INCHES(1.0 / 12.0),
+    YARDS(3.0),
+    CENTIMETERS(1.0/30.48);
 
-    private final double toFeetFactor;
+    private final double conversionFactorToFeet;
 
-    LengthUnit(double toFeetFactor) {
-        this.toFeetFactor = toFeetFactor;
+    LengthUnit(double conversionFactorToFeet) {
+        this.conversionFactorToFeet = conversionFactorToFeet;
     }
 
-    public double toFeet(double value) {
-        return value * toFeetFactor;
+    public double getConversionFactor() {
+        return conversionFactorToFeet;
     }
 
-    public double fromFeet(double feetValue) {
-        return feetValue / toFeetFactor;
+    //Convert value in THIS unit → base unit (feet)
+    public double convertToBaseUnit(double value) {
+
+        if(!Double.isFinite(value))
+            throw new IllegalArgumentException("Invalid numeric value");
+
+        return value * conversionFactorToFeet;
+    }
+
+    //Convert value from base unit (feet) → THIS unit
+    public double convertFromBaseUnit(double baseValue) {
+
+        if(!Double.isFinite(baseValue))
+            throw new IllegalArgumentException("Invalid numeric value");
+
+        return baseValue / conversionFactorToFeet;
     }
 }
