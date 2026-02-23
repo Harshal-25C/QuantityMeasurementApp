@@ -1,6 +1,10 @@
 package com.quantity.domain.length;
 
 import org.junit.jupiter.api.Test;
+
+import com.quantity.domain.weight.QuantityWeight;
+import com.quantity.domain.weight.WeightUnit;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class QuantityTest {
@@ -103,5 +107,57 @@ class QuantityTest {
 
         assertEquals(0.666666, result.getValue(), 1e-6);
         assertEquals(LengthUnit.YARDS, result.getUnit());
+    }
+    
+    @Test
+    void testEquality_KilogramToGram() {
+        assertEquals(
+                new QuantityWeight(1.0, WeightUnit.KILOGRAM),
+                new QuantityWeight(1000.0, WeightUnit.GRAM)
+        );
+    }
+
+    @Test
+    void testEquality_KilogramToPound() {
+        assertEquals(
+                new QuantityWeight(1.0, WeightUnit.KILOGRAM),
+                new QuantityWeight(2.20462, WeightUnit.POUND)
+        );
+    }
+    
+    @Test
+    void testConversion_KilogramToPound() {
+
+        QuantityWeight result =
+                new QuantityWeight(1.0, WeightUnit.KILOGRAM)
+                        .convertTo(WeightUnit.POUND);
+
+        assertEquals(2.20462, result.getValue(), 1e-4);
+    }
+    
+    @Test
+    void testAddition_CrossUnit() {
+
+        QuantityWeight result =
+                new QuantityWeight(1.0, WeightUnit.KILOGRAM)
+                        .add(new QuantityWeight(1000.0, WeightUnit.GRAM));
+
+        assertEquals(
+                new QuantityWeight(2.0, WeightUnit.KILOGRAM),
+                result
+        );
+    }
+
+    @Test
+    void testAddition_ExplicitTargetUnit() {
+
+        QuantityWeight result =
+                QuantityWeight.add(
+                        new QuantityWeight(1.0, WeightUnit.KILOGRAM),
+                        new QuantityWeight(1000.0, WeightUnit.GRAM),
+                        WeightUnit.GRAM
+                );
+
+        assertEquals(2000.0, result.getValue(), 1e-6);
     }
 }
