@@ -219,25 +219,25 @@ All branches include JUnit test cases covering:
 
 ### ⚙ How to Run
 
-## 1️⃣ Clone Repository
+#### 1️⃣ Clone Repository
 
 ```
 git clone <repository-url>
 ```
 
-## 2️⃣ Switch Branch
+#### 2️⃣ Switch Branch
 
 ```
 git checkout feature/UC3-GenericQuantityClassForDRYPrinciple
 ```
 
-## 3️⃣ Run Tests
+#### 3️⃣ Run Tests
 
 ```
 mvn clean test
 ```
 
-## 4️⃣ Run Application
+#### 4️⃣ Run Application
 
 Run `QuantityMeasurementApp.java` from IDE.
 
@@ -262,7 +262,7 @@ feature/* → dev → main
 
 ---
 
-# 📚 Key Learning Outcomes
+### 📚 Key Learning Outcomes
 
 - Understanding value-based equality
 - Avoiding code duplication
@@ -274,7 +274,7 @@ feature/* → dev → main
 
 ---
 
-# 🚀 Future Enhancements
+### 🚀 Future Enhancements
 
 - Add Meter, Yard, Centimeter
 - Introduce Weight measurement
@@ -285,7 +285,7 @@ feature/* → dev → main
 
 ---
 
-# 👨‍💻 Author
+### 👨‍💻 Author
 
 Harshal Choudhary  
 B.Tech Computer Science & Engineering  
