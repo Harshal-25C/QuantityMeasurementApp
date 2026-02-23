@@ -5,32 +5,62 @@ import com.quantity.domain.length.Quantity;
 
 public class QuantityMeasurementApp {
 
-    public static void demonstrateAddition(Quantity q1, Quantity q2) {
-        Quantity result = q1.add(q2);
-        System.out.println("Result: " + result);
-    }
-
-    public static void demonstrateConversion(double value, LengthUnit from,  LengthUnit to) {
-        double result = Quantity.convert(value, from, to);
-        System.out.println("Converted Value: " + result + " " + to);
-    }
-
     public static void main(String[] args) {
 
-        //UC6 Examples
-        demonstrateAddition(
+        System.out.println(
+            Quantity.add(
                 new Quantity(1.0, LengthUnit.FEET),
-                new Quantity(12.0, LengthUnit.INCHES)
+                new Quantity(12.0, LengthUnit.INCHES),
+                LengthUnit.FEET)
         );
 
-        demonstrateAddition(
+        System.out.println(
+            Quantity.add(
+                new Quantity(1.0, LengthUnit.FEET),
+                new Quantity(12.0, LengthUnit.INCHES),
+                LengthUnit.INCHES)
+        );
+
+        System.out.println(
+            Quantity.add(
+                new Quantity(1.0, LengthUnit.FEET),
+                new Quantity(12.0, LengthUnit.INCHES),
+                LengthUnit.YARDS)
+        );
+
+        System.out.println(
+            Quantity.add(
                 new Quantity(1.0, LengthUnit.YARDS),
-                new Quantity(3.0, LengthUnit.FEET)
+                new Quantity(3.0, LengthUnit.FEET),
+                LengthUnit.YARDS)
         );
 
-        demonstrateAddition(
+        System.out.println(
+            Quantity.add(
+                new Quantity(36.0, LengthUnit.INCHES),
+                new Quantity(1.0, LengthUnit.YARDS),
+                LengthUnit.FEET)
+        );
+
+        System.out.println(
+            Quantity.add(
                 new Quantity(2.54, LengthUnit.CENTIMETERS),
-                new Quantity(1.0, LengthUnit.INCHES)
+                new Quantity(1.0, LengthUnit.INCHES),
+                LengthUnit.CENTIMETERS)
+        );
+
+        System.out.println(
+            Quantity.add(
+                new Quantity(5.0, LengthUnit.FEET),
+                new Quantity(0.0, LengthUnit.INCHES),
+                LengthUnit.YARDS)
+        );
+
+        System.out.println(
+            Quantity.add(
+                new Quantity(5.0, LengthUnit.FEET),
+                new Quantity(-2.0, LengthUnit.FEET),
+                LengthUnit.INCHES)
         );
     }
 }
