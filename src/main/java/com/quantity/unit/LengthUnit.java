@@ -1,4 +1,4 @@
-package com.quantity.domain.length;
+package com.quantity.unit;
 
 import com.quantity.domain.IMeasurable;
 
