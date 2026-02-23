@@ -1,36 +1,40 @@
 package com.quantity.domain.weight;
 
-public enum WeightUnit {
+import com.quantity.domain.IMeasurable;
 
-    KILOGRAM(1.0),        // Base Unit
-    GRAM(0.001),          // 1 g = 0.001 kg
-    POUND(0.453592);      // 1 lb ≈ 0.453592 kg
+public enum WeightUnit implements IMeasurable {
 
-    private final double conversionFactorToKg;
+    KILOGRAM(1.0),
+    GRAM(0.001),
+    POUND(0.453592);
 
-    WeightUnit(double conversionFactorToKg) {
-        this.conversionFactorToKg = conversionFactorToKg;
+    private final double conversionFactor;
+
+    WeightUnit(double conversionFactor) {
+        this.conversionFactor = conversionFactor;
     }
 
+    @Override
     public double getConversionFactor() {
-        return conversionFactorToKg;
+        return conversionFactor;
     }
 
-    //Convert THIS unit → base unit (kg)
+    @Override
     public double convertToBaseUnit(double value) {
-
         if (!Double.isFinite(value))
             throw new IllegalArgumentException("Invalid numeric value");
-
-        return value * conversionFactorToKg;
+        return value * conversionFactor;
     }
 
-    //Convert base unit (kg) → THIS unit
+    @Override
     public double convertFromBaseUnit(double baseValue) {
-
-        if(!Double.isFinite(baseValue))
+        if (!Double.isFinite(baseValue))
             throw new IllegalArgumentException("Invalid numeric value");
+        return baseValue / conversionFactor;
+    }
 
-        return baseValue / conversionFactorToKg;
+    @Override
+    public String getUnitName() {
+        return name();
     }
 }
