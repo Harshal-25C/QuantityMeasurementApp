@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class Quantity {
 
+    private static final double EPSILON = 0.0001;
+
     private final double value;
     private final LengthUnit unit;
 
@@ -15,30 +17,23 @@ public class Quantity {
         this.unit = unit;
     }
 
-    public double getValue() {
-        return value;
-    }
-
-    public LengthUnit getUnit() {
-        return unit;
-    }
-
     private double toBaseUnit() {
         return unit.toBaseUnit(value);
     }
 
     @Override
     public boolean equals(Object obj) {
+
         if(this == obj) return true;
         if(obj == null || getClass() != obj.getClass()) return false;
 
         Quantity other = (Quantity) obj;
 
-        return Double.compare(this.toBaseUnit(), other.toBaseUnit()) == 0;
+        return Math.abs(this.toBaseUnit() - other.toBaseUnit()) < EPSILON;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(toBaseUnit());
+        return Objects.hash(Math.round(toBaseUnit() / EPSILON));
     }
 }
