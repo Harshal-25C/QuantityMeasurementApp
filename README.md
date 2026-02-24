@@ -45,7 +45,8 @@ quantity-measurement-app/
 │   │       └── com/quantity/
 │   │           ├── app/
 │   │           └── domain/
-│   │               └── length/
+│   │               ├── length/
+|   |               └── weight/
 │   │
 │   └── test/
 │       └── java/
