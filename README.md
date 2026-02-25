@@ -209,7 +209,7 @@ Temperature does not support ADD operation.
 
 ---
 
-### 🧪 Testing Strategy
+### 🧪Testing Strategy
 
 JUnit 5 coverage includes:
 
@@ -226,7 +226,7 @@ JUnit 5 coverage includes:
 
 ---
 
-### 🔐 Type Safety
+### 🔐Type Safety
 
 Compile-time:
 `Quantity<TemperatureUnit> ≠ Quantity<LengthUnit>`
@@ -284,6 +284,7 @@ All measurable units behave consistently for conversion.
 ```
 git clone <repository-url>
 ```
+
 
 #### 2️⃣ Switch Branch
 
