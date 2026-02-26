@@ -308,4 +308,4 @@ Run `QuantityMeasurementApp.java` from IDE.
 
 [Harshal Choudhary](https://github.com/Harshal-25C) - Software Developer👨‍💻 | Cloud Enthusiast            
 B.Tech - `[Computer Science & Engineering]`         
-Java | Maven | OOP | Clean Architecture          
+Java | Maven | OOPs | Clean Architecture          
