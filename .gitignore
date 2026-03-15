@@ -12,6 +12,7 @@ bin/
 .metadata/
 .project
 .classpath
+.factorypath
 
 # STS
 .springBeans
