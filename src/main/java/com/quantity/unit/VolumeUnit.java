@@ -1,19 +1,16 @@
 package com.quantity.unit;
 
-import com.quantity.unit.IMeasurable;
-
+// volume units
 public enum VolumeUnit implements IMeasurable {
 
-    LITRE(1.0, "Litre"),
-    MILLILITRE(0.001, "Millilitre"),
-    GALLON(3.78541, "Gallon");
+    LITRE(1.0),
+    MILLILITRE(0.001),
+    GALLON(3.78541);
 
     private final double conversionFactor;
-    private final String unitName;
 
-    VolumeUnit(double conversionFactor, String unitName) {
+    VolumeUnit(double conversionFactor) {
         this.conversionFactor = conversionFactor;
-        this.unitName = unitName;
     }
 
     @Override
@@ -23,28 +20,16 @@ public enum VolumeUnit implements IMeasurable {
 
     @Override
     public double convertToBaseUnit(double value) {
-        return value * conversionFactor;
+        return value * conversionFactor; // convert to litre
     }
 
     @Override
     public double convertFromBaseUnit(double baseValue) {
-        return baseValue / conversionFactor;
+        return baseValue / conversionFactor; // from litre
     }
 
     @Override
     public String getUnitName() {
-        return unitName;
+        return this.name();
     }
-
-	@Override
-	public double toBaseUnit(double value) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double fromBaseUnit(double baseValue) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 }

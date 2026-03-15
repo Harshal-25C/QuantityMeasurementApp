@@ -1,28 +1,23 @@
 package com.quantity.app;
 
-import com.quantity.domain.Quantity;
-import com.quantity.unit.TemperatureUnit;
+import com.quantity.controller.QuantityMeasurementController;
+import com.quantity.repository.QuantityMeasurementCacheRepository;
+import com.quantity.service.IQuantityMeasurementService;
+import com.quantity.service.QuantityMeasurementServiceImpl;
 
 public class QuantityMeasurementApp {
 
     public static void main(String[] args) {
 
-        Quantity<TemperatureUnit> temp1 =
-                new Quantity<>(0.0, TemperatureUnit.CELSIUS);
+        var repository = QuantityMeasurementCacheRepository.getInstance();
 
-        Quantity<TemperatureUnit> temp2 =
-                new Quantity<>(32.0, TemperatureUnit.FAHRENHEIT);
+        IQuantityMeasurementService service =
+                new QuantityMeasurementServiceImpl(repository);
 
-        System.out.println("Equality: " + temp1.equals(temp2));
+        QuantityMeasurementController controller =
+                new QuantityMeasurementController(service);
 
-        System.out.println("Convert 100C to F: " +
-                new Quantity<>(100.0, TemperatureUnit.CELSIUS)
-                        .convertTo(TemperatureUnit.FAHRENHEIT));
-
-        try {
-            temp1.add(new Quantity<>(50.0, TemperatureUnit.CELSIUS));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        controller.performAddition();
     }
+
 }

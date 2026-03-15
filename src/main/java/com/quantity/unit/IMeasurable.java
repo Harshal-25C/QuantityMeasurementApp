@@ -1,21 +1,34 @@
 package com.quantity.unit;
 
+/*
+ * UC14 Enhancements:
+ * Adds optional arithmetic capability support.
+ * Existing units remain fully compatible.
+ */
+
 public interface IMeasurable {
 
-    double toBaseUnit(double value);
-    double fromBaseUnit(double baseValue);
+    // EXISTING REQUIRED METHODS (UNCHANGED)
+    String getUnitName();
+    double getConversionFactor();
+    double convertToBaseUnit(double value);
+    double convertFromBaseUnit(double baseValue);
 
+
+    // NEW UC14 ADDITIONS 
+    // default lambda → all units support arithmetic by default
     SupportsArithmetic supportsArithmetic = () -> true;
 
+    // default method → existing units inherit TRUE
     default boolean supportsArithmetic() {
         return supportsArithmetic.isSupported();
     }
 
+    /*
+     * Default validation method.
+     * Units that do NOT support arithmetic (Temperature) will override this.
+     */
     default void validateOperationSupport(String operation) {
-        // Default: all operations allowed
+        // do nothing by default
     }
-	double convertFromBaseUnit(double baseValue);
-	String getUnitName();
-	double convertToBaseUnit(double value);
-	double getConversionFactor();
 }

@@ -1,13 +1,14 @@
 package com.quantity.unit;
 
-import com.quantity.unit.IMeasurable;
-
 public enum WeightUnit implements IMeasurable {
 
-    KILOGRAM(1.0),
-    GRAM(0.001),
-    POUND(0.453592);
+    MILLIGRAM(0.001),
+    GRAM(1.0),
+    KILOGRAM(1000.0),
+    POUND(453.592),
+    TONNE(1_000_000.0);
 
+	// conversion to base (grams)
     private final double conversionFactor;
 
     WeightUnit(double conversionFactor) {
@@ -21,32 +22,18 @@ public enum WeightUnit implements IMeasurable {
 
     @Override
     public double convertToBaseUnit(double value) {
-        if(!Double.isFinite(value))
-            throw new IllegalArgumentException("Invalid numeric value");
-        return value * conversionFactor;
+        double result = value*conversionFactor; // to grams
+        return Math.round(result * 100.0)/100.0; // round
     }
 
     @Override
     public double convertFromBaseUnit(double baseValue) {
-        if(!Double.isFinite(baseValue))
-            throw new IllegalArgumentException("Invalid numeric value");
-        return baseValue / conversionFactor;
+        double result = baseValue/conversionFactor; // from grams
+        return Math.round(result * 100.0)/100.0; // round
     }
 
     @Override
     public String getUnitName() {
-        return name();
+        return this.name(); // unit name
     }
-
-	@Override
-	public double toBaseUnit(double value) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double fromBaseUnit(double baseValue) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 }
