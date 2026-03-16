@@ -9,13 +9,47 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class QuantityMeasurementEntity {
 
-    public QuantityMeasurementEntity(String string, String string2, String string3, String valueOf, Object object) {
-		// TODO Auto-generated constructor stub
-	}
-	private String operation;
+    private String operation;
     private String operand1;
     private String operand2;
     private String result;
     private String errorMessage;
 
+    public QuantityMeasurementEntity(String operation,
+                                     String operand1,
+                                     String operand2,
+                                     String result,
+                                     String errorMessage) {
+
+        this.operation = operation;
+        this.operand1 = operand1;
+        this.operand2 = operand2;
+        this.result = result;
+        this.errorMessage = errorMessage;
+    }
+
+    public String getOperation() {
+        return operation;
+    }
+
+    public String getOperand1() {
+        return operand1;
+    }
+
+    public String getOperand2() {
+        return operand2;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+    
+//    @Override
+//    public String toString() {
+//        return operation + " | " + operand1 + " | " + operand2 + " | " + result;
+//    }
 }
