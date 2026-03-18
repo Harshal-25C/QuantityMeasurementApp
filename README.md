@@ -1,4 +1,4 @@
-# QuantityManagementSystem♨️📈
+## QuantityManagementSystem♨️📈
 
 A Maven-based Java application that demonstrates object-oriented design principles
 by implementing length equality comparison across multiple development stages (UC1, UC2, UC3).
@@ -309,3 +309,4 @@ Run `QuantityMeasurementApp.java` from IDE.
 [Harshal Choudhary](https://github.com/Harshal-25C) - Software Developer👨‍💻 | Cloud Enthusiast            
 B.Tech - `[Computer Science & Engineering]`         
 Java | Maven | OOPs | Clean Architecture          
+
