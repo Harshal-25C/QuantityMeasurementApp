@@ -1,4 +1,4 @@
-## QuantityManagementSystem♨️📈
+# QuantityManagementSystem♨️📈
 
 A Maven-based Java application that demonstrates object-oriented design principles
 by implementing length equality comparison across multiple development stages (UC1, UC2, UC3).
