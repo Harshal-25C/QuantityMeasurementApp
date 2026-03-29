@@ -1,126 +1,207 @@
-## UC17 — Spring Boot & REST API Integration for Quantity Measurement Application♨️💡
+# 🚀 Quantity Measurement App (UC18 - JWT + OAuth2)
 
-### Branch: `feature/UC17-SpringBoot-Backend-Integration`
+## 📌 Overview
 
----
+The **Quantity Measurement App** is a Spring Boot-based REST API that supports various measurement operations like **Length, Weight, Volume, and Temperature**.
 
-## Overview📂
+This project is enhanced with **advanced security features** including:
 
-UC17 transforms the standalone Quantity Measurement Application (UC16) into a **Spring Boot REST Service**.
-The Quantity Measurement Application is designed to validate equality, conversion, and arithmetic operations between different measurement units such as Feet, Inches, Yards, etc.
-
-This project was implemented incrementally using:
-
-✅ Test-Driven Development (TDD)
-✅ Feature Branch Workflow
-✅ Clean Code Practices
-✅ DRY (Don't Repeat Yourself) Principle
-✅ Proper Unit Conversion Strategy
-
-| Feature | UC16 | UC17 |
-|---------|------|------|
-| Framework | Plain Java | Spring Boot 3.1.0 |
-| Database Access | JDBC (manual) | Spring Data JPA (automatic) |
-| API Exposure | None | REST Endpoints |
-| Configuration | Manual properties | Spring auto-configuration |
-| Dependency Injection | Manual | Spring `@Autowired` |
-| Testing | JUnit | MockMvc + SpringBootTest |
-| Documentation | None | Swagger / OpenAPI |
-| Security | None | Spring Security |
-| Server | None | Embedded Tomcat (port 8080) |
+* 🔐 JWT Authentication
+* 🌐 GitHub OAuth2 Login
+* 🗄️ JPA & Database Integration
+* 📊 Swagger API Documentation
+* ⚡ Robust Exception Handling & Validation
 
 ---
 
-## Project Structure
+## 🎯 Key Features
+
+### 🧮 Core Functionalities
+
+* Compare quantities
+* Convert units
+* Arithmetic operations (Add, Subtract, Divide)
+* Measurement history tracking
+* Error tracking & reporting
+
+---
+
+### 🔐 Security Features (UC18)
+
+* JWT-based Authentication (Stateless)
+* GitHub OAuth2 Login
+* Secure REST APIs
+* Custom Authentication Filter
+* Unauthorized access handling (401 response)
+
+---
+
+### 🗄️ Database & Persistence
+
+* JPA (Hibernate ORM)
+* H2 (Development)
+* MySQL (Production ready)
+* Indexed queries for performance
+
+---
+
+### 📊 API & Monitoring
+
+* Swagger UI (API Testing)
+* Spring Boot Actuator
+* Logging & Debugging support
+
+---
+
+## 🏗️ Project Structure
 
 ```
-quantity-measurement-app/
+com.app
 │
-├── pom.xml                                          Spring Boot dependencies
-│
-├── src/main/java/com/apps/
-│   ├── app/
-│   │   └── QuantityMeasurementApplication.java      Spring Boot main class
-│   │
-│   ├── config/
-│   │   └── SecurityConfig.java                      Security configuration
-│   │
-│   ├── controller/
-│   │   └── QuantityMeasurementController.java        REST endpoints
-│   │
-│   ├── core/                                         NO CHANGE - business logic
-│   │   ├── IMeasurable.java
-│   │   ├── LengthUnit.java
-│   │   ├── Quantity.java
-│   │   ├── SupportsArithmetic.java
-│   │   ├── TemperatureUnit.java
-│   │   ├── VolumeUnit.java
-│   │   └── WeightUnit.java
-│   │
-│   ├── dto/
-│   │   ├── OperationType.java                        NEW - operation enum
-│   │   ├── QuantityDTO.java                          MODIFIED - added validation
-│   │   ├── QuantityInputDTO.java                     NEW - REST input wrapper
-│   │   └── QuantityMeasurementDTO.java               NEW - REST output with factory methods
-│   │
-│   ├── exception/
-│   │   ├── DatabaseException.java                    NO CHANGE
-│   │   ├── GlobalExceptionHandler.java               NEW - centralized error handling
-│   │   └── QuantityMeasurementException.java         NO CHANGE
-│   │
-│   ├── model/
-│   │   ├── QuantityMeasurementEntity.java            MODIFIED - JPA annotations
-│   │   └── QuantityModel.java                        NO CHANGE
-│   │
-│   ├── repository/
-│   │   └── QuantityMeasurementRepository.java        NEW - Spring Data JPA
-│   │
-│   └── service/
-│       ├── IQuantityMeasurementService.java          MODIFIED - new signatures
-│       └── QuantityMeasurementServiceImpl.java       MODIFIED - Spring @Service
-│
-├── src/main/resources/
-│   ├── application.properties                        spring.application.name only
-│   ├── application-dev.properties                    H2 database + DEBUG logging
-│   └── application-prod.properties                   MySQL + WARN logging
-│
-├── src/test/java/com/apps/
-│   ├── app/
-│   │   └── QuantityMeasurementApplicationTests.java  Integration tests
-│   └── controller/
-│       └── QuantityMeasurementControllerTest.java    MockMvc unit tests
-│
-└── dump/                                             UC16 deprecated files
-    ├── QuantityMeasurementApp.java
-    ├── IQuantityMeasurementRepository.java
-    ├── QuantityMeasurementCacheRepository.java
-    ├── QuantityMeasurementDatabaseRepository.java
-    ├── ApplicationConfig.java
-    └── ConnectionPool.java
+├── config              # Security & Swagger Config
+├── controller          # REST Controllers
+├── service             # Business Logic
+├── repository          # JPA Repositories
+├── model               # Entities & Domain Models
+├── dto                 # Request/Response DTOs
+├── security            # JWT & OAuth2 Components
+├── exception           # Global Exception Handling
+└── core                # Measurement Logic
 ```
 
 ---
 
-## Technology Stack
+## ⚙️ Tech Stack
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| Java | 17 | Programming language |
-| Spring Boot | 3.1.0 | Application framework |
-| Spring Web | 3.1.0 | REST endpoints + Embedded Tomcat |
-| Spring Data JPA | 3.1.0 | ORM - replaces JDBC |
-| Spring Security | 3.1.0 | Authentication/Authorization |
-| Spring Actuator | 3.1.0 | Health checks + Metrics |
-| H2 Database | Runtime | In-memory DB for development |
-| MySQL | Runtime | Production database |
-| Hibernate | Auto | JPA implementation |
-| HikariCP | Auto | Connection pooling |
-| SpringDoc OpenAPI | 2.1.0 | Swagger UI documentation |
-| Lombok | Latest | Reduce boilerplate code |
-| JUnit 5 | Auto | Unit + Integration testing |
-| Mockito | Auto | Mocking in tests |
+| Layer      | Technology                   |
+| ---------- | ---------------------------- |
+| Backend    | Java, Spring Boot            |
+| Security   | Spring Security, JWT, OAuth2 |
+| Database   | H2, MySQL                    |
+| ORM        | Hibernate (JPA)              |
+| API Docs   | Swagger (OpenAPI)            |
+| Build Tool | Maven                        |
 
 ---
+
+## 🔑 Authentication Flow
+
+### 🔐 1. JWT Login
+
+```
+POST /auth/login
+```
+
+➡️ Returns JWT Token
+
+---
+
+### 🌐 2. GitHub OAuth Login
+
+```
+GET /oauth2/authorization/github
+```
+
+➡️ Redirects to GitHub
+➡️ Returns JWT after successful login
+
+---
+
+### 🔒 3. Access Protected APIs
+
+Add header:
+
+```
+Authorization: Bearer <JWT_TOKEN>
+```
+
+---
+
+## 📌 API Endpoints
+
+### 🔹 Quantity Operations
+
+| Method | Endpoint                      | Description         |
+| ------ | ----------------------------- | ------------------- |
+| POST   | `/api/v1/quantities/compare`  | Compare quantities  |
+| POST   | `/api/v1/quantities/convert`  | Convert units       |
+| POST   | `/api/v1/quantities/add`      | Add quantities      |
+| POST   | `/api/v1/quantities/subtract` | Subtract quantities |
+| POST   | `/api/v1/quantities/divide`   | Divide quantities   |
+
+---
+
+### 🔹 History & Reports
+
+| Method | Endpoint                                           |
+| ------ | -------------------------------------------------- |
+| GET    | `/api/v1/quantities/history/operation/{operation}` |
+| GET    | `/api/v1/quantities/history/type/{type}`           |
+| GET    | `/api/v1/quantities/count/{operation}`             |
+| GET    | `/api/v1/quantities/history/errored`               |
+
+---
+
+### 🔹 Auth APIs
+
+| Method | Endpoint         |
+| ------ | ---------------- |
+| POST   | `/auth/register` |
+| POST   | `/auth/login`    |
+
+---
+
+## ⚙️ Configuration
+
+### 🔐 JWT Properties
+
+```properties
+jwt.secret=your_secret_key
+jwt.expiration=86400000
+```
+
+---
+
+### 🌐 GitHub OAuth Config
+
+```properties
+spring.security.oauth2.client.registration.github.client-id=YOUR_CLIENT_ID
+spring.security.oauth2.client.registration.github.client-secret=YOUR_CLIENT_SECRET
+spring.security.oauth2.client.registration.github.scope=user:email
+```
+
+---
+
+## 📊 Swagger UI
+
+Access API docs:
+
+```
+http://localhost:8080/swagger-ui/index.html
+```
+
+---
+
+## 🧪 Testing
+
+* Unit & Integration tests included
+* Security disabled for test profile
+* Covers:
+
+  * API endpoints
+  * Database persistence
+  * Validation scenarios
+
+---
+
+## ⚠️ Important Notes
+
+* OAuth login must be tested via browser (not Postman)
+* JWT required for all protected endpoints
+* Unauthorized requests return `401` (not redirect)
+
+---
+
 
 ### Author👨‍💻
 
