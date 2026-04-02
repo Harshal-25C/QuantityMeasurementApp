@@ -1,61 +1,203 @@
-## QuantityManagementSystem♨️📈
+# 🚀 Quantity Measurement App (UC18 - JWT + OAuth2)
 
-A Maven-based Java application that demonstrates object-oriented design principles
-by implementing length equality comparison across multiple development stages (UC1, UC2, UC3).
+## 📌 Overview
 
-The project evolves incrementally using Git branches to demonstrate refactoring,
-DRY principle, abstraction, polymorphism, and clean architecture.
+The **Quantity Measurement App** is a Spring Boot-based REST API that supports various measurement operations like **Length, Weight, Volume, and Temperature**.
 
----
+This project is enhanced with **advanced security features** including:
 
-### 📌 Project Overview
-
-A generic, extensible, and SOLID-compliant Java application for performing measurement operations across multiple categories:
-
-- Length
-- Weight
-- Volume
-- Temperature (with selective arithmetic support)
-
-The system evolves incrementally from **UC1 to UC14**, demonstrating clean architecture, generics, functional interfaces, lambda expressions, and interface refactoring principles.
-
-Design a scalable and type-safe measurement system that:
-
-- Supports unit conversion
-- Maintains cross-category isolation
-- Centralizes arithmetic logic
-- Enforces operation validity constraints
-- Demonstrates real-world object-oriented design
+* 🔐 JWT Authentication
+* 🌐 GitHub OAuth2 Login
+* 🗄️ JPA & Database Integration
+* 📊 Swagger API Documentation
+* ⚡ Robust Exception Handling & Validation
 
 ---
 
-### Project Structure🏗 
+## 🎯 Key Features
 
-#### 🏗 Project Structure (Maven)
+### 🧮 Core Functionalities
+
+* Compare quantities
+* Convert units
+* Arithmetic operations (Add, Subtract, Divide)
+* Measurement history tracking
+* Error tracking & reporting
+
+---
+
+### 🔐 Security Features (UC18)
+
+* JWT-based Authentication (Stateless)
+* GitHub OAuth2 Login
+* Secure REST APIs
+* Custom Authentication Filter
+* Unauthorized access handling (401 response)
+
+---
+
+### 🗄️ Database & Persistence
+
+* JPA (Hibernate ORM)
+* H2 (Development)
+* MySQL (Production ready)
+* Indexed queries for performance
+
+---
+
+### 📊 API & Monitoring
+
+* Swagger UI (API Testing)
+* Spring Boot Actuator
+* Logging & Debugging support
+
+---
+
+## 🏗️ Project Structure
 
 ```
-quantity-measurement-app/
+com.app
 │
-├── pom.xml
-├── .gitignore
-│
-├── src/
-│   ├── main/
-│   │   └── java/
-│   │       └── com/quantity/
-│   │           ├── app/
-│   │           └── domain/
-│   │               ├── length/
-|   |               └── weight/
-│   │
-│   └── test/
-│       └── java/
-│           └── com/quantity/
-│               └── domain/
-│                   └── length/
-│
-└── target/
+├── config              # Security & Swagger Config
+├── controller          # REST Controllers
+├── service             # Business Logic
+├── repository          # JPA Repositories
+├── model               # Entities & Domain Models
+├── dto                 # Request/Response DTOs
+├── security            # JWT & OAuth2 Components
+├── exception           # Global Exception Handling
+└── core                # Measurement Logic
+
+---
+
+## ⚙️ Tech Stack
+
+| Layer      | Technology                   |
+| ---------- | ---------------------------- |
+| Backend    | Java, Spring Boot            |
+| Security   | Spring Security, JWT, OAuth2 |
+| Database   | H2, MySQL                    |
+| ORM        | Hibernate (JPA)              |
+| API Docs   | Swagger (OpenAPI)            |
+| Build Tool | Maven                        |
+
+---
+
+## 🔑 Authentication Flow
+
+### 🔐 1. JWT Login
+
 ```
+POST /auth/login
+```
+
+➡️ Returns JWT Token
+
+---
+
+### 🌐 2. GitHub OAuth Login
+
+```
+GET /oauth2/authorization/github
+```
+
+➡️ Redirects to GitHub
+➡️ Returns JWT after successful login
+
+---
+
+### 🔒 3. Access Protected APIs
+
+Add header:
+
+```
+Authorization: Bearer <JWT_TOKEN>
+```
+
+---
+
+## 📌 API Endpoints
+
+### 🔹 Quantity Operations
+
+| Method | Endpoint                      | Description         |
+| ------ | ----------------------------- | ------------------- |
+| POST   | `/api/v1/quantities/compare`  | Compare quantities  |
+| POST   | `/api/v1/quantities/convert`  | Convert units       |
+| POST   | `/api/v1/quantities/add`      | Add quantities      |
+| POST   | `/api/v1/quantities/subtract` | Subtract quantities |
+| POST   | `/api/v1/quantities/divide`   | Divide quantities   |
+
+---
+
+### 🔹 History & Reports
+
+| Method | Endpoint                                           |
+| ------ | -------------------------------------------------- |
+| GET    | `/api/v1/quantities/history/operation/{operation}` |
+| GET    | `/api/v1/quantities/history/type/{type}`           |
+| GET    | `/api/v1/quantities/count/{operation}`             |
+| GET    | `/api/v1/quantities/history/errored`               |
+
+---
+
+### 🔹 Auth APIs
+
+| Method | Endpoint         |
+| ------ | ---------------- |
+| POST   | `/auth/register` |
+| POST   | `/auth/login`    |
+
+---
+
+## ⚙️ Configuration
+
+### 🔐 JWT Properties
+
+```properties
+jwt.secret=your_secret_key
+jwt.expiration=86400000
+```
+
+---
+
+### 🌐 GitHub OAuth Config
+
+```properties
+spring.security.oauth2.client.registration.github.client-id=YOUR_CLIENT_ID
+spring.security.oauth2.client.registration.github.client-secret=YOUR_CLIENT_SECRET
+spring.security.oauth2.client.registration.github.scope=user:email
+```
+
+---
+
+## 📊 Swagger UI
+
+Access API docs:
+
+```
+http://localhost:8080/swagger-ui/index.html
+```
+
+---
+
+## 🧪 Testing
+
+* Unit & Integration tests included
+* Security disabled for test profile
+* Covers:
+
+  * API endpoints
+  * Database persistence
+  * Validation scenarios
+
+---
+
+## ⚠️ Important Notes
+
+* OAuth login must be tested via browser (not Postman)
+* JWT required for all protected endpoints
+* Unauthorized requests return `401` (not redirect)
 
 ---
 
@@ -155,37 +297,6 @@ Temperature arithmetic is disabled because:
 
 ---
 
-## 🌿 Branch Strategy
-
-### `main`
-- Stable production-ready branch
-- Contains UC1 – UC14
-
-### `dev`
-- Integration branch
-- All feature branches merged before main
-
-### Feature Branches🌿
-
-| Branch | Description |
-|--------|------------|
-| feature/UC1 | Basic equality |
-| feature/UC2 | Null validation |
-| feature/UC3 | Inequality logic |
-| feature/UC4 | Length conversion |
-| feature/UC5 | Additional length units |
-| feature/UC6 | Weight measurement |
-| feature/UC7 | Volume measurement |
-| feature/UC8 | Addition support |
-| feature/UC9 | Subtraction support |
-| feature/UC10 | Division support |
-| feature/UC11 | Volume arithmetic |
-| feature/UC12 | Arithmetic enum refactor |
-| feature/UC13 | Centralized arithmetic logic |
-| feature/UC14 | Temperature with selective arithmetic |
-
----
-
 ### 🧠 Core Concepts Implemented
 
 - Generics
@@ -239,14 +350,6 @@ Cross-category comparisons return false.
 
 ---
 
-### 📏 Floating-Point Precision
-
-- private static final double EPSILON = 0.01;
-
-Prevents precision-related equality errors.
-
----
-
 ### 🏛 Design Principles
 
 #### ▶️ Single Responsibility
@@ -266,46 +369,8 @@ All measurable units behave consistently for conversion.
 
 ---
 
-### 🔮 Future Enhancements
-
-- Compile-time arithmetic restriction
-- Temperature difference modeling
-- REST API integration
-- Spring Boot wrapper
-- Persistence layer
-- Additional measurement categories
-
----
-
-### ⚙ How to Run
-
-#### 1️⃣ Clone Repository
-
-```
-git clone <repository-url>
-```
-
-
-#### 2️⃣ Switch Branch
-
-```
-git checkout feature/UC3-GenericQuantityClassForDRYPrinciple
-```
-
-#### 3️⃣ Run Tests
-
-```
-mvn clean test
-```
-
-#### 4️⃣ Run Application
-
-Run `QuantityMeasurementApp.java` from IDE.
-
----
-
 ### Author👨‍💻
 
 [Harshal Choudhary](https://github.com/Harshal-25C) - Software Developer👨‍💻 | Cloud Enthusiast            
 B.Tech - `[Computer Science & Engineering]`         
-Java | Maven | OOPs | Clean Architecture          
+Java | Maven | OOPs | Clean Architecture 
