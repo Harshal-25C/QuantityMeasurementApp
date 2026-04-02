@@ -1,128 +1,210 @@
-## 📏 Quantity Measurement Application  
-### 🚀 Branch: dev
+# 🚀 Quantity Measurement App (UC18 - JWT + OAuth2)
+
+## 📌 Overview
+
+The **Quantity Measurement App** is a Spring Boot-based REST API that supports various measurement operations like **Length, Weight, Volume, and Temperature**.
+
+This project is enhanced with **advanced security features** including:
+
+* 🔐 JWT Authentication
+* 🌐 GitHub OAuth2 Login
+* 🗄️ JPA & Database Integration
+* 📊 Swagger API Documentation
+* ⚡ Robust Exception Handling & Validation
 
 ---
 
-### 📌 Overview
+## 🎯 Key Features
 
-The `dev` branch represents the **active development branch** of the Quantity Measurement Application.
+### 🧮 Core Functionalities
 
-This branch consolidates all completed and in-progress use cases (UC1 – UC14) and serves as the integration branch before merging into `main`.
-
-It contains:
-
-- Core domain models
-- Unit abstractions
-- Conversion logic
-- Arithmetic operations
-- Temperature handling
-- Volume support
-- Comprehensive test coverage
+* Compare quantities
+* Convert units
+* Arithmetic operations (Add, Subtract, Divide)
+* Measurement history tracking
+* Error tracking & reporting
 
 ---
 
-### 🎯 Project Objective
+### 🔐 Security Features (UC18)
 
-To build a scalable and extensible **Quantity Measurement System** that:
-
-- Supports multiple measurement types  
-- Allows unit conversions  
-- Enables arithmetic operations  
-- Maintains strict type safety  
-- Ensures domain correctness through test-driven development  
+* JWT-based Authentication (Stateless)
+* GitHub OAuth2 Login
+* Secure REST APIs
+* Custom Authentication Filter
+* Unauthorized access handling (401 response)
 
 ---
 
-### 🏗 Architecture Overview
+### 🗄️ Database & Persistence
 
-The system follows clean domain-driven design principles.
-
-### Core Concepts
-
-- `Quantity` → Represents measurable value
-- `IMeasurable` → Interface for measurement types
-- Unit Enums → Length, Weight, Volume, Temperature
-- Operation validation per measurement type
-- Conversion normalization strategy
+* JPA (Hibernate ORM)
+* H2 (Development)
+* MySQL (Production ready)
+* Indexed queries for performance
 
 ---
 
-### 🔄 Implemented Use Cases
+### 📊 API & Monitoring
 
-| UC | Description |
-|----|-------------|
-| UC1 | Feet Equality |
-| UC2 | Null Handling |
-| UC3 | Different Unit Inequality |
-| UC4 | Inch ↔ Feet Conversion |
-| UC5 | Length Addition |
-| UC6 | Weight Equality |
-| UC7 | Weight Addition |
-| UC8 | Gallon ↔ Liter Conversion |
-| UC9 | Volume Addition |
-| UC10 | Refactored Design with Interface |
-| UC11 | Volume Support Extension |
-| UC12 | Temperature Equality |
-| UC13 | Temperature Conversion (C ↔ F) |
-| UC14 | Restrict Temperature Arithmetic |
+* Swagger UI (API Testing)
+* Spring Boot Actuator
+* Logging & Debugging support
 
 ---
 
-### 🧠 Design Principles
+## 🏗️ Project Structure
 
-- ✔ Object-Oriented Design
-- ✔ Interface-based abstraction
-- ✔ Strategy-like unit conversion handling
-- ✔ Immutability for domain safety
-- ✔ Proper equals() and hashCode()
-- ✔ Clean separation of concerns
-- ✔ Test-driven development approach
-
----
-
-### 🔬 Measurement Types Supported
-
-### 📏 Length
-- Feet
-- Inch
-- Yard (if implemented)
-
-### ⚖ Weight
-- Gram
-- Kilogram
-- Tonne
-
-### 🧪 Volume
-- Liter
-- Gallon
-- Milliliter
-
-### 🌡 Temperature
-- Celsius
-- Fahrenheit
+```
+com.app
+│
+├── config              # Security & Swagger Config
+├── controller          # REST Controllers
+├── service             # Business Logic
+├── repository          # JPA Repositories
+├── model               # Entities & Domain Models
+├── dto                 # Request/Response DTOs
+├── security            # JWT & OAuth2 Components
+├── exception           # Global Exception Handling
+└── core                # Measurement Logic
+```
 
 ---
 
-### ➕ Arithmetic Support
+## ⚙️ Tech Stack
 
-| Measurement | Addition | Subtraction | Conversion |
-|-------------|----------|------------|------------|
-| Length | ✔ | ✔ | ✔ |
-| Weight | ✔ | ✔ | ✔ |
-| Volume | ✔ | ✔ | ✔ |
-| Temperature | ❌ | ❌ | ✔ |
-
-Temperature arithmetic is intentionally restricted due to physical domain rules.
+| Layer      | Technology                   |
+| ---------- | ---------------------------- |
+| Backend    | Java, Spring Boot            |
+| Security   | Spring Security, JWT, OAuth2 |
+| Database   | H2, MySQL                    |
+| ORM        | Hibernate (JPA)              |
+| API Docs   | Swagger (OpenAPI)            |
+| Build Tool | Maven                        |
 
 ---
 
-### 🧪 Testing Strategy
+## 🔑 Authentication Flow
 
-- JUnit 5
-- Positive scenarios
-- Negative scenarios
-- Cross-unit validation
-- Exception validation
-- Edge case handling
+### 🔐 1. JWT Login
 
-All use cases are covered with deterministic tests.
+```
+POST /auth/login
+```
+
+➡️ Returns JWT Token
+
+---
+
+### 🌐 2. GitHub OAuth Login
+
+```
+GET /oauth2/authorization/github
+```
+
+➡️ Redirects to GitHub
+➡️ Returns JWT after successful login
+
+---
+
+### 🔒 3. Access Protected APIs
+
+Add header:
+
+```
+Authorization: Bearer <JWT_TOKEN>
+```
+
+---
+
+## 📌 API Endpoints
+
+### 🔹 Quantity Operations
+
+| Method | Endpoint                      | Description         |
+| ------ | ----------------------------- | ------------------- |
+| POST   | `/api/v1/quantities/compare`  | Compare quantities  |
+| POST   | `/api/v1/quantities/convert`  | Convert units       |
+| POST   | `/api/v1/quantities/add`      | Add quantities      |
+| POST   | `/api/v1/quantities/subtract` | Subtract quantities |
+| POST   | `/api/v1/quantities/divide`   | Divide quantities   |
+
+---
+
+### 🔹 History & Reports
+
+| Method | Endpoint                                           |
+| ------ | -------------------------------------------------- |
+| GET    | `/api/v1/quantities/history/operation/{operation}` |
+| GET    | `/api/v1/quantities/history/type/{type}`           |
+| GET    | `/api/v1/quantities/count/{operation}`             |
+| GET    | `/api/v1/quantities/history/errored`               |
+
+---
+
+### 🔹 Auth APIs
+
+| Method | Endpoint         |
+| ------ | ---------------- |
+| POST   | `/auth/register` |
+| POST   | `/auth/login`    |
+
+---
+
+## ⚙️ Configuration
+
+### 🔐 JWT Properties
+
+```properties
+jwt.secret=your_secret_key
+jwt.expiration=86400000
+```
+
+---
+
+### 🌐 GitHub OAuth Config
+
+```properties
+spring.security.oauth2.client.registration.github.client-id=YOUR_CLIENT_ID
+spring.security.oauth2.client.registration.github.client-secret=YOUR_CLIENT_SECRET
+spring.security.oauth2.client.registration.github.scope=user:email
+```
+
+---
+
+## 📊 Swagger UI
+
+Access API docs:
+
+```
+http://localhost:8080/swagger-ui/index.html
+```
+
+---
+
+## 🧪 Testing
+
+* Unit & Integration tests included
+* Security disabled for test profile
+* Covers:
+
+  * API endpoints
+  * Database persistence
+  * Validation scenarios
+
+---
+
+## ⚠️ Important Notes
+
+* OAuth login must be tested via browser (not Postman)
+* JWT required for all protected endpoints
+* Unauthorized requests return `401` (not redirect)
+
+---
+
+
+### Author👨‍💻
+
+[Harshal Choudhary](https://github.com/Harshal-25C) - Software Developer👨‍💻 | Cloud Enthusiast            
+B.Tech - `[Computer Science & Engineering]`         
+Java | Maven | OOPs | Clean Architecture 
