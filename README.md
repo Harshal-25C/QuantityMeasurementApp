@@ -848,12 +848,8 @@ spring:
 
 ---
 
-<div align="center">
-
----
-
 ### Author👨‍💻
 
-[Harshal Choudhary](https://github.com/Harshal-25C) - Software Developer👨‍💻 | Cloud Enthusiast            
+[Harshal Choudhary](https://github.com/Harshal-25C) - Software Developer👨‍💻 | Cloud Enthusiast              
 B.Tech - `[Computer Science & Engineering]`         
-Java | Maven | OOPs | Clean Architecture 
+Java | Spring Boot | Maven | JWT & Security | OAuth | React.js | Clean Architecture 
