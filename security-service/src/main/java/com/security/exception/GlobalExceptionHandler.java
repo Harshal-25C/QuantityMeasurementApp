@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(DuplicateEmailException.class)
@@ -21,10 +21,28 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ErrorResponse> handleRuntime(RuntimeException ex) {
+        ex.printStackTrace();
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                ErrorResponse.builder()
+                        .message(ex.getMessage())
+                        .statusCode(HttpStatus.CONFLICT.value())
+                        .timestamp(LocalDateTime.now())
+                        .build()
+        );
+    }
+
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<?> handleBadCredentials(BadCredentialsException ex) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body("Invalid email or password");
+    public ResponseEntity<ErrorResponse> handleBadCredentials(BadCredentialsException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+                ErrorResponse.builder()
+                        .message("Invalid email or password")
+                        .statusCode(HttpStatus.UNAUTHORIZED.value())
+                        .timestamp(LocalDateTime.now())
+                        .build()
+        );
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -47,6 +65,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneric(Exception ex) {
+        ex.printStackTrace();
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                 ErrorResponse.builder()
                         .message("Unexpected error: " + ex.getMessage())
