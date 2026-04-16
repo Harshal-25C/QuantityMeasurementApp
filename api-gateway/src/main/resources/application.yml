@@ -13,7 +13,7 @@ spring:
         cors-configurations:
           '[/**]':
             allowedOrigins:
-              - "https://quantity-measurement-app-lyart.vercel.app"
+              - "https://*.vercel.app"
             allowedMethods:
               - GET
               - POST
