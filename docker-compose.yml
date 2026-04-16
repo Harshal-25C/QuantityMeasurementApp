@@ -74,8 +74,26 @@ services:
       - quantity-net
     restart: unless-stopped
 
+  caddy:
+     image: caddy:2
+     container_name: caddy
+     ports:
+       - "80:80"
+       - "443:443"
+     volumes:
+       - ./Caddyfile:/etc/caddy/Caddyfile
+       - caddy_data:/data
+       - caddy_config:/config
+     depends_on:
+       - api-gateway
+     networks:
+       - quantity-net
+     restart: unless-stopped
+
 volumes:
   mysql_data:
+  caddy_data:
+  caddy_config:
 
 networks:
   quantity-net:
