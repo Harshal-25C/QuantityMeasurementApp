@@ -12,7 +12,7 @@ services:
       - quantity-net
 
   eureka-server:
-    build: ./eureka-server
+    image: httpsharsh/qma-eureka-server:latest
     container_name: eureka-server
     ports:
       - "8761:8761"
@@ -20,7 +20,7 @@ services:
       - quantity-net
 
   security-service:
-    build: ./security-service
+    image: httpsharsh/qma-security-service:latest
     container_name: security-service
     ports:
       - "8081:8081"
@@ -39,7 +39,7 @@ services:
       - quantity-net
 
   quantity-measurement-app:
-    build: ./quantity-measurement-app
+    image: httpsharsh/qma-quantity-measurement-app:latest
     container_name: quantity-measurement-app
     ports:
       - "8082:8082"
@@ -56,7 +56,7 @@ services:
       - quantity-net
 
   api-gateway:
-    build: ./api-gateway
+    image: httpsharsh/qma-api-gateway:latest
     container_name: api-gateway
     ports:
       - "8080:8080"
