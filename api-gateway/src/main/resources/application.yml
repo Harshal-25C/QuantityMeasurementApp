@@ -12,7 +12,7 @@ spring:
         add-to-simple-url-handler-mapping: true
         cors-configurations:
           '[/**]':
-            allowedOrigins:
+            allowedOriginPatterns:
               - "https://*.vercel.app"
             allowedMethods:
               - GET
@@ -25,7 +25,7 @@ spring:
             exposedHeaders:
               - "*"
  
-            allowCredentials: true
+            allowCredentials: false
 
       routes:
 
